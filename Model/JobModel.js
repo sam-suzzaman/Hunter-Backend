@@ -9,6 +9,13 @@ const JobSchema = new mongoose.Schema(
             minLength: [5, "Company name is too short"],
             maxLength: [100, "Company name is too long"],
         },
+        jobTitle: {
+            type: String,
+            required: [true, "Job Must have a title"],
+            trim: true,
+            minLength: [5, "Job title is too short"],
+            maxLength: [200, "Job title is too long"],
+        },
         position: {
             type: String,
             requried: [true, "Job must have a Position"],
@@ -26,14 +33,6 @@ const JobSchema = new mongoose.Schema(
             enum: ["office", "remote"],
             required: [true, "Job must have a type(office/remote)"],
         },
-        jobTime: {
-            type: String,
-            enum: ["full-time", "part-time", "intern"],
-            required: [
-                true,
-                "Job must have a time duration(full-time/part-time/intern)",
-            ],
-        },
         workTime: {
             type: String,
             required: [true, "Job must have a duration(in hr)"],
@@ -46,4 +45,5 @@ const JobSchema = new mongoose.Schema(
     { timestamps: true } // to keep track
 );
 
-module.exports.JobModel = mongoose.model("Job", JobSchema);
+const JobModel = mongoose.model("Job", JobSchema);
+module.exports = JobModel;

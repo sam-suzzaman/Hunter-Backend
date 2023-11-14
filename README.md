@@ -21,3 +21,4 @@ It is a MERN Stack based Job Portal Website. Comming Soon...
 -   Mongoose
 -   Dotenv
 -   nanoid
+-   Http-errors
