@@ -24,6 +24,17 @@ app.get("/api/v1/jobs", (req, res) => {
     res.status(200).json({ jobs });
 });
 
+// Get Single Jobs
+app.get("/api/v1/jobs/:id", (req, res) => {
+    const { id } = req.params;
+    const job = jobs.find((job) => job._id === id);
+    if (!job) {
+        res.status(404).json({ message: "Job not found" });
+        return;
+    }
+    res.status(200).json({ job });
+});
+
 // Create A Job
 app.post("/api/v1/jobs", (req, res) => {
     const { company, position } = req.body;
@@ -35,7 +46,7 @@ app.post("/api/v1/jobs", (req, res) => {
 
     const job = { _id: nanoid(), company, position };
     jobs.push(job);
-    res.status(200).json({ message: "Job added", job });
+    res.status(201).json({ message: "Job added", job });
 });
 
 module.exports = app;
