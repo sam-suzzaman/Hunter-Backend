@@ -1,14 +1,11 @@
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
 const app = require("./App");
 
 // DB Connection
-// mongoose.connect(process.env.DB_URL).then(() => {
-//     console.log("DB Connected");
-// });
-// or Call DBHandler
+const DBConnectionHandler = require("./Utils/DBconnect");
+DBConnectionHandler();
 
-// Server
 const port = process.env.PORT || 2000;
 
 // 404 Error handler
