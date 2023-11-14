@@ -1,14 +1,16 @@
 const JobModel = require("../Model/JobModel");
 const createError = require("http-errors");
 
-module.exports.getAllJobs = (req, res) => {
-    // const { id } = req.params;
-    // const job = jobs.find((job) => job._id === id);
-    // if (!job) {
-    //     res.status(404).json({ message: "Job not found" });
-    //     return;
-    // }
-    res.status(200).json({ message: "all jobs" });
+module.exports.getAllJobs = async (req, res, next) => {
+    try {
+        const result = await JobModel.find({});
+        res.status(200).json({
+            status: true,
+            result,
+        });
+    } catch (error) {
+        next(createError(500, error.message));
+    }
 };
 
 module.exports.addJob = async (req, res, next) => {
