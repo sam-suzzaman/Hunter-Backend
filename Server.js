@@ -11,6 +11,16 @@ const app = require("./App");
 // Server
 const port = process.env.PORT || 2000;
 
+// 404 Error handler
+app.use("*", (req, res) => {
+    res.status(404).json({ message: "Not Found" });
+});
+
+// Error Handeling Middleware
+app.use((err, req, res, next) => {
+    res.status(500).json({ message: "Something went wrong" });
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port http://localhost:${port}`);
 });
