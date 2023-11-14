@@ -20,3 +20,4 @@ It is a MERN Stack based Job Portal Website. Comming Soon...
 -   Cors
 -   Mongoose
 -   Dotenv
+-   nanoid
