@@ -3,9 +3,15 @@ const JobRouter = express.Router(); // create a router
 
 // Controllers
 const JobController = require("../Controller/JobController");
+const { checkJobInput } = require("../Validation/JobDataRules");
+const {
+    inputValidationMiddleware,
+} = require("../Validation/ValidationMiddleware");
 
 // Routes
-JobRouter.route("/").get(JobController.getAllJobs).post(JobController.addJob);
+JobRouter.route("/")
+    .get(JobController.getAllJobs)
+    .post(checkJobInput, inputValidationMiddleware, JobController.addJob);
 JobRouter.route("/:id")
     .get(JobController.getSingleJob)
     .patch(JobController.updateSingleJob)

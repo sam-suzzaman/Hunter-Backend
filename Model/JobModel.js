@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { JOB_STATUS, JOB_TYPE } = require("../Utils/JobConstants");
 
 const JobSchema = new mongoose.Schema(
     {
@@ -9,13 +10,6 @@ const JobSchema = new mongoose.Schema(
             minLength: [5, "Company name is too short"],
             maxLength: [100, "Company name is too long"],
         },
-        jobTitle: {
-            type: String,
-            required: [true, "Job Must have a title"],
-            trim: true,
-            minLength: [5, "Job title is too short"],
-            maxLength: [200, "Job title is too long"],
-        },
         position: {
             type: String,
             requried: [true, "Job must have a Position"],
@@ -25,17 +19,13 @@ const JobSchema = new mongoose.Schema(
         },
         jobStatus: {
             type: String,
-            enum: ["interview", "declined", "pending"],
-            default: "pending",
+            enum: Object.values(JOB_STATUS),
+            default: JOB_STATUS.PENDING,
         },
         jobType: {
             type: String,
-            enum: ["office", "remote"],
-            required: [true, "Job must have a type(office/remote)"],
-        },
-        workTime: {
-            type: String,
-            required: [true, "Job must have a duration(in hr)"],
+            enum: Object.values(JOB_TYPE),
+            default: JOB_TYPE.FULL_TIME,
         },
         jobLocation: {
             type: String,
