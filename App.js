@@ -19,8 +19,23 @@ app.get("/", (req, res) => {
     res.send("<h1 align='center'>--- Hunter Server is Alive ---</h1>");
 });
 
+// Get All Jobs
 app.get("/api/v1/jobs", (req, res) => {
     res.status(200).json({ jobs });
+});
+
+// Create A Job
+app.post("/api/v1/jobs", (req, res) => {
+    const { company, position } = req.body;
+
+    if (!company || !position) {
+        res.status(400).json({ message: "Provide comapny and position" });
+        return;
+    }
+
+    const job = { _id: nanoid(), company, position };
+    jobs.push(job);
+    res.status(200).json({ message: "Job added", job });
 });
 
 module.exports = app;
