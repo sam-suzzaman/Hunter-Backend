@@ -3,15 +3,29 @@ const UserRouter = express.Router(); // create a router
 
 // Controllers
 const UserController = require("../Controller/UserController");
-// const { checkJobInput } = require("../Validation/JobDataRules");
-// const {
-//     inputValidationMiddleware,
-// } = require("../Validation/ValidationMiddleware");
+const { checkRegisterInput } = require("../Validation/UserDataRules");
+const {
+    inputValidationMiddleware,
+} = require("../Validation/ValidationMiddleware");
 
-// Routes
+// Auth routes
+UserRouter.post(
+    "/register",
+    checkRegisterInput,
+    inputValidationMiddleware,
+    UserController.addUser
+);
+// UserRouter.post(
+//     "/login",
+//     checkRegisterInput,
+//     inputValidationMiddleware,
+//     UserController.addUser
+// );
+// UserRouter.get("/me", UserController.getMe);
+
+// Users Route
 UserRouter.route("/")
     .get(UserController.getAllUser)
-    .post(UserController.addUser)
     .delete(UserController.deleteAllUser);
 
 UserRouter.route("/:id")
@@ -19,7 +33,7 @@ UserRouter.route("/:id")
     .patch(UserController.updateUser)
     .delete(UserController.deleteUser);
 
-UserRouter.route("/me/:id").get(UserController.getMe);
+// UserRouter.route("/me/:id").get(UserController.getMe);
 
 module.exports = UserRouter;
 
