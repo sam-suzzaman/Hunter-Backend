@@ -11,7 +11,8 @@ const {
 // Routes
 JobRouter.route("/")
     .get(JobController.getAllJobs)
-    .post(checkJobInput, inputValidationMiddleware, JobController.addJob);
+    .post(checkJobInput, inputValidationMiddleware, JobController.addJob)
+    .delete(JobController.deleteAllJobs);
 JobRouter.route("/:id")
     .get(JobController.getSingleJob)
     .patch(JobController.updateSingleJob)
