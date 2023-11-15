@@ -26,3 +26,13 @@ exports.checkRegisterInput = [
         .withMessage("Password is too short (min 8)"),
     check("location").trim(),
 ];
+
+exports.checkLoginInput = [
+    check("email")
+        .trim()
+        .notEmpty()
+        .withMessage("Email is required")
+        .isEmail()
+        .withMessage("Invalid email"),
+    check("password").trim().notEmpty().withMessage("Password is required"),
+];

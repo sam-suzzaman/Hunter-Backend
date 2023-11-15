@@ -3,7 +3,12 @@ const UserRouter = express.Router(); // create a router
 
 // Controllers
 const UserController = require("../Controller/UserController");
-const { checkRegisterInput } = require("../Validation/UserDataRules");
+
+const {
+    checkRegisterInput,
+    checkLoginInput,
+} = require("../Validation/UserDataRules");
+
 const {
     inputValidationMiddleware,
 } = require("../Validation/ValidationMiddleware");
@@ -15,12 +20,12 @@ UserRouter.post(
     inputValidationMiddleware,
     UserController.addUser
 );
-// UserRouter.post(
-//     "/login",
-//     checkRegisterInput,
-//     inputValidationMiddleware,
-//     UserController.addUser
-// );
+UserRouter.post(
+    "/login",
+    checkLoginInput,
+    inputValidationMiddleware,
+    UserController.loginUser
+);
 // UserRouter.get("/me", UserController.getMe);
 
 // Users Route

@@ -31,6 +31,10 @@ const JobSchema = new mongoose.Schema(
             type: String,
             required: [true, "Job must have a location"],
         },
+        createdBy: {
+            type: mongoose.Types.ObjectId,
+            ref: "User",
+        },
     },
     { timestamps: true } // to keep track
 );
