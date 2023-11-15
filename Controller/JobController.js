@@ -48,6 +48,7 @@ module.exports.addJob = async (req, res, next) => {
         if (isJobExists) {
             next(createError(500, "Job data already exist"));
         } else {
+            jobData.createdBy = req.user._id;
             const newJob = new JobModel(jobData);
             const result = await newJob.save();
 

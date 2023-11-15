@@ -6,14 +6,14 @@ const JWTGenerator = require("../Utils/JWTGenerator");
 
 exports.getAllUser = async (req, res, next) => {
     try {
-        const result = await UserModel.find({}).select("-_id");
+        const result = await UserModel.find({}).select("-password");
         if (result.length !== 0) {
             res.status(200).json({
                 status: true,
                 result,
             });
         } else {
-            next(createError(500, "User list is empty"));
+            next(createError(200, "User list is empty"));
         }
     } catch (error) {
         next(createError(500, error.message));
@@ -23,6 +23,15 @@ exports.getAllUser = async (req, res, next) => {
 exports.getMe = async (req, res, next) => {
     res.send("get me");
 };
+
+exports.logOut = async (req, res, next) => {
+    res.cookie(process.env.COOKIE_NAME, "", {
+        expires: new Date(Date.now()), //expire time of cookie
+        httpOnly: true,
+    });
+    res.status(200).json({ message: "Logout done" });
+};
+
 exports.getSingleUser = async (req, res, next) => {
     res.send("get single user");
 };
@@ -75,7 +84,7 @@ exports.loginUser = async (req, res, next) => {
 
                 const one_day = 1000 * 60 * 60 * 24; //since token expire in 1day
 
-                res.cookies(process.env.COOKIE_NAME, TOKEN, {
+                res.cookie(process.env.COOKIE_NAME, TOKEN, {
                     maxAge: one_day, //expire time of cookie
                     httpOnly: true,
                     signed: true, //to keep secure
@@ -100,9 +109,38 @@ exports.updateUser = async (req, res, next) => {
 };
 
 exports.deleteUser = async (req, res, next) => {
-    res.send("user deleted");
+    const { id } = req.params;
+    try {
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            next(createError(400, "Invalid User ID format"));
+        }
+
+        const isUserExists = await UserModel.findOne({ _id: id });
+        if (!isUserExists) {
+            res.status(500).json({
+                status: false,
+                message: "User not found",
+            });
+        } else {
+            const result = await UserModel.findByIdAndDelete(id);
+            res.status(200).json({
+                status: true,
+                message: "User Deleted",
+            });
+        }
+    } catch (error) {
+        next(createError(500, `something wrong: ${error.message}`));
+    }
 };
 
 exports.deleteAllUser = async (req, res, next) => {
-    res.send("user all deleted");
+    try {
+        result = await UserModel.deleteMany({});
+        res.status(201).json({
+            status: true,
+            message: "All userd deleted",
+        });
+    } catch (error) {
+        next(createError(500, `something wrong: ${error.message}`));
+    }
 };

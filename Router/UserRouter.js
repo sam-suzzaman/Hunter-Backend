@@ -1,5 +1,8 @@
 const express = require("express");
 const UserRouter = express.Router(); // create a router
+const {
+    authenticateUser,
+} = require("./../Middleware/UserAuthenticationMiddleware");
 
 // Controllers
 const UserController = require("../Controller/UserController");
@@ -13,7 +16,8 @@ const {
     inputValidationMiddleware,
 } = require("../Validation/ValidationMiddleware");
 
-// Auth routes
+// Authentication routes
+UserRouter.get("/logout", authenticateUser, UserController.logOut);
 UserRouter.post(
     "/register",
     checkRegisterInput,
