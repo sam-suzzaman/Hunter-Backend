@@ -5,12 +5,36 @@ const mongoose = require("mongoose");
 module.exports.getAllJobs = async (req, res, next) => {
     try {
         const result = await JobModel.find({});
-        res.status(200).json({
-            status: true,
-            result,
-        });
+        if (result.length !== 0) {
+            res.status(200).json({
+                status: true,
+                result,
+            });
+        } else {
+            next(createError(500, "Job List is empty"));
+        }
     } catch (error) {
         next(createError(500, error.message));
+    }
+};
+
+module.exports.getSingleJob = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            next(createError(400, "Invalid Job ID format"));
+        }
+        const result = await JobModel.findById(id);
+        if (!result) {
+            next(createError(500, "Job not found"));
+        } else {
+            res.status(200).json({
+                status: true,
+                result,
+            });
+        }
+    } catch (error) {
+        next(createError(500, `something wrong: ${error.message}`));
     }
 };
 
@@ -37,26 +61,30 @@ module.exports.addJob = async (req, res, next) => {
     }
 };
 
-module.exports.getSingleJob = (req, res) => {
+module.exports.updateSingleJob = async (req, res, next) => {
     const { id } = req.params;
-    console.log(id);
-    // const job = jobs.find((job) => job._id === id);
-    // if (!job) {
-    //     res.status(404).json({ message: "Job not found" });
-    //     return;
-    // }
-    res.status(200).json({ message: "Single Job" });
-};
+    const data = req.body;
+    try {
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            next(createError(400, "Invalid Job ID format"));
+        }
 
-module.exports.updateSingleJob = (req, res) => {
-    const { id } = req.params;
-    console.log(id);
-    // const job = jobs.find((job) => job._id === id);
-    // if (!job) {
-    //     res.status(404).json({ message: "Job not found" });
-    //     return;
-    // }
-    res.status(200).json({ message: "Single Job updated" });
+        const isJobExists = await JobModel.findOne({ _id: id });
+        if (!isJobExists) {
+            next(createError(500, "Job not found"));
+        } else {
+            const updatedJob = await JobModel.findByIdAndUpdate(id, data, {
+                new: true,
+            });
+            res.status(200).json({
+                status: true,
+                message: "Job Updated",
+                result: updatedJob,
+            });
+        }
+    } catch (error) {
+        next(createError(500, `something wrong: ${error.message}`));
+    }
 };
 
 module.exports.deleteSingleJob = async (req, res, next) => {

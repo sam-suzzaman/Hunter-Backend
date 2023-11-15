@@ -15,7 +15,11 @@ JobRouter.route("/")
     .delete(JobController.deleteAllJobs);
 JobRouter.route("/:id")
     .get(JobController.getSingleJob)
-    .patch(JobController.updateSingleJob)
+    .patch(
+        checkJobInput,
+        inputValidationMiddleware,
+        JobController.updateSingleJob
+    )
     .delete(JobController.deleteSingleJob);
 
 module.exports = JobRouter;
