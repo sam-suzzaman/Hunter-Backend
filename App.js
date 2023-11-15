@@ -8,8 +8,10 @@ app.use(cors());
 
 // Routers
 const JobRouter = require("./Router/JobRouter");
+const UserRouter = require("./Router/UserRouter");
 
 // Connecting routes
 app.use("/api/v1/Jobs", JobRouter);
+app.use("/api/v1/Users", UserRouter);
 
 module.exports = app;
