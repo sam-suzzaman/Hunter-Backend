@@ -21,7 +21,11 @@ const {
 
 UserRouter.route("/")
     .get(UserController.getAllUser)
-    .patch(checkUserUpdateInput, UserController.updateUser)
+    .patch(
+        checkUserUpdateInput,
+        inputValidationMiddleware,
+        UserController.updateUser
+    )
     .delete(UserController.deleteAllUser);
 
 UserRouter.route("/:id")

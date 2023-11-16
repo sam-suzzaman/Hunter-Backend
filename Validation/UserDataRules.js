@@ -45,12 +45,12 @@ exports.checkUserUpdateInput = [
         .notEmpty()
         .withMessage("Email is required")
         .isEmail()
-        .withMessage("Invalid email")
-        .custom(async (email, { req }) => {
-            const isUserExists = await UserModel.findOne({ email });
-            if (isUserExists && isUserExists._id.toString() !== req.user._id) {
-                throw new Error("No permission to update");
-            }
-        }),
+        .withMessage("Invalid email"),
+    // .custom(async (email, { req }) => {
+    //     const isUserExists = await UserModel.findOne({ email });
+    //     if (isUserExists && isUserExists._id.toString() !== req.user._id) {
+    //         throw new Error("No permission to update");
+    //     }
+    // }),
     check("location").trim().notEmpty().withMessage("Location is required"),
 ];
