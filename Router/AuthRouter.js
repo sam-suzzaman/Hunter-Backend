@@ -18,6 +18,8 @@ const {
 
 // Authentication routes
 AuthRouter.get("/logout", authenticateUser, UserController.logOut);
+AuthRouter.get("/me", authenticateUser, UserController.getMe);
+
 AuthRouter.post(
     "/register",
     checkRegisterInput,
@@ -32,8 +34,3 @@ AuthRouter.post(
 );
 
 module.exports = AuthRouter;
-
-// Extra----------------------------
-// AuthRouter.get("/", JobController.getAllJobs); //Get all jobs
-// AuthRouter.post("/", JobController.addJob); //Add all jobs
-// AuthRouter.get("/:id", JobController.getSingleJob); //Get Single all jobs

@@ -21,7 +21,19 @@ exports.getAllUser = async (req, res, next) => {
 };
 
 exports.getMe = async (req, res, next) => {
-    res.send("get me");
+    try {
+        const me = req.user;
+        if (!me) {
+            next(createError(500, "Please login first"));
+        } else {
+            res.status(200).json({
+                status: true,
+                result: me,
+            });
+        }
+    } catch (error) {
+        next(createError(500, error.message));
+    }
 };
 
 exports.logOut = async (req, res, next) => {
