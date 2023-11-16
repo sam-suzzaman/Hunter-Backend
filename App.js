@@ -17,10 +17,11 @@ const {
 // Routers
 const JobRouter = require("./Router/JobRouter");
 const UserRouter = require("./Router/UserRouter");
+const AuthRouter = require("./Router/AuthRouter");
 
 // Connecting routes
 app.use("/api/v1/Jobs", authenticateUser, JobRouter);
 app.use("/api/v1/Users", authenticateUser, UserRouter);
-app.use("/api/v1/Auth", UserRouter);
+app.use("/api/v1/Auth", AuthRouter);
 
 module.exports = app;
