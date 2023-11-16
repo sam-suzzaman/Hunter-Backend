@@ -10,6 +10,7 @@ const UserController = require("../Controller/UserController");
 const {
     checkRegisterInput,
     checkLoginInput,
+    checkUserUpdateInput,
 } = require("../Validation/UserDataRules");
 
 const {
@@ -20,11 +21,11 @@ const {
 
 UserRouter.route("/")
     .get(UserController.getAllUser)
+    .patch(checkUserUpdateInput, UserController.updateUser)
     .delete(UserController.deleteAllUser);
 
 UserRouter.route("/:id")
     .get(UserController.getSingleUser)
-    .patch(UserController.updateUser)
     .delete(UserController.deleteUser);
 
 module.exports = UserRouter;

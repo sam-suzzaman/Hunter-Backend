@@ -117,7 +117,49 @@ exports.loginUser = async (req, res, next) => {
 };
 
 exports.updateUser = async (req, res, next) => {
-    res.send("user updated");
+    const data = req.body;
+    console.log(data);
+    try {
+        if (req.user.email !== data.email) {
+            next(createError(500, `You have no permission to update`));
+        } else {
+            const updateUser = await UserModel.findByIdAndUpdate(
+                req.user._id,
+                data,
+                {
+                    new: true,
+                }
+            ).select("-password");
+            res.status(200).json({
+                status: true,
+                message: "Profile Updated",
+                result: updateUser,
+            });
+        }
+    } catch (error) {
+        next(createError(500, `something wrong: ${error.message}`));
+    }
+    // try {
+    //     if (!mongoose.Types.ObjectId.isValid(id)) {
+    //         next(createError(400, "Invalid Job ID format"));
+    //     }
+
+    //     const isJobExists = await JobModel.findOne({ _id: id });
+    //     if (!isJobExists) {
+    //         next(createError(500, "Job not found"));
+    //     } else {
+    //         const updatedJob = await JobModel.findByIdAndUpdate(id, data, {
+    //             new: true,
+    //         });
+    //         res.status(200).json({
+    //             status: true,
+    //             message: "Job Updated",
+    //             result: updatedJob,
+    //         });
+    //     }
+    // } catch (error) {
+    //     next(createError(500, `something wrong: ${error.message}`));
+    // }
 };
 
 exports.deleteUser = async (req, res, next) => {

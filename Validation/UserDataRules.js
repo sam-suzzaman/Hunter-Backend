@@ -36,3 +36,21 @@ exports.checkLoginInput = [
         .withMessage("Invalid email"),
     check("password").trim().notEmpty().withMessage("Password is required"),
 ];
+
+exports.checkUserUpdateInput = [
+    check("firstname").trim().notEmpty().withMessage("Username is required"),
+    check("lastname").trim(),
+    check("email")
+        .trim()
+        .notEmpty()
+        .withMessage("Email is required")
+        .isEmail()
+        .withMessage("Invalid email")
+        .custom(async (email, { req }) => {
+            const isUserExists = await UserModel.findOne({ email });
+            if (isUserExists && isUserExists._id.toString() !== req.user._id) {
+                throw new Error("No permission to update");
+            }
+        }),
+    check("location").trim().notEmpty().withMessage("Location is required"),
+];
