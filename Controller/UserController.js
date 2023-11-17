@@ -38,8 +38,11 @@ exports.getMe = async (req, res, next) => {
 
 exports.logOut = async (req, res, next) => {
     res.cookie(process.env.COOKIE_NAME, "", {
-        expires: new Date(Date.now()), //expire time of cookie
-        httpOnly: true,
+        expires: new Date(Date.now()),
+        secure: true, // Sent only over HTTPS
+        httpOnly: true, // Restricts access from client-side scripts
+        signed: true, // Helps keep the cookie secure
+        sameSite: "None",
     })
         .status(200)
         .json({ message: "Logout done" });
