@@ -44,6 +44,7 @@ exports.logOut = async (req, res, next) => {
             httpOnly: true, // Restricts access from client-side scripts
             signed: true, // Helps keep the cookie secure
             sameSite: "None",
+            domain: "https://hunter-backend-dun.vercel.app",
         })
             .status(200)
             .json({ message: "Logout done" });
