@@ -98,9 +98,10 @@ exports.loginUser = async (req, res, next) => {
 
                 res.cookie(process.env.COOKIE_NAME, TOKEN, {
                     expires: new Date(Date.now() + one_day),
-                    // secure: true, // Sent only over HTTPS
+                    secure: true, // Sent only over HTTPS
                     httpOnly: true, // Restricts access from client-side scripts
                     signed: true, // Helps keep the cookie secure
+                    sameSite: "None",
                 });
                 res.status(200).json({
                     status: true,
