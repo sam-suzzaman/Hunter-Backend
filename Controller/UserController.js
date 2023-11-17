@@ -40,8 +40,9 @@ exports.logOut = async (req, res, next) => {
     res.cookie(process.env.COOKIE_NAME, "", {
         expires: new Date(Date.now()), //expire time of cookie
         httpOnly: true,
-    });
-    res.status(200).json({ message: "Logout done" });
+    })
+        .status(200)
+        .json({ message: "Logout done" });
 };
 
 exports.getSingleUser = async (req, res, next) => {
