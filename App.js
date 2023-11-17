@@ -7,7 +7,12 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // Middlewares
 app.use(express.json());
-app.use(cors());
+app.use(
+    cors({
+        origin: "*",
+        credentials: true,
+    })
+);
 
 // Custom Middlewares
 const {

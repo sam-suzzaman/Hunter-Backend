@@ -4,8 +4,8 @@ const createHttpError = require("http-errors");
 // const { JOB_TYPE, JOB_STATUS } = require("../Utils/JobConstants");
 
 exports.checkRegisterInput = [
-    check("firstname").trim().notEmpty().withMessage("Username is required"),
-    check("lastname").trim(),
+    check("username").trim().notEmpty().withMessage("Username is required"),
+    // check("lastname").trim(),
     check("email")
         .trim()
         .notEmpty()
@@ -38,8 +38,8 @@ exports.checkLoginInput = [
 ];
 
 exports.checkUserUpdateInput = [
-    check("firstname").trim().notEmpty().withMessage("Username is required"),
-    check("lastname").trim(),
+    check("username").trim().notEmpty().withMessage("Username is required"),
+    // check("lastname").trim(),
     check("email")
         .trim()
         .notEmpty()

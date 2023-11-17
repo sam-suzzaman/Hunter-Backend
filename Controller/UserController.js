@@ -97,7 +97,8 @@ exports.loginUser = async (req, res, next) => {
                 const one_day = 1000 * 60 * 60 * 24; //since token expire in 1day
 
                 res.cookie(process.env.COOKIE_NAME, TOKEN, {
-                    maxAge: one_day, //expire time of cookie
+                    expires: new Date(Date.now() + one_day),
+                    secure: true,
                     httpOnly: true,
                     signed: true, //to keep secure
                 });
@@ -139,27 +140,6 @@ exports.updateUser = async (req, res, next) => {
     } catch (error) {
         next(createError(500, `something wrong: ${error.message}`));
     }
-    // try {
-    //     if (!mongoose.Types.ObjectId.isValid(id)) {
-    //         next(createError(400, "Invalid Job ID format"));
-    //     }
-
-    //     const isJobExists = await JobModel.findOne({ _id: id });
-    //     if (!isJobExists) {
-    //         next(createError(500, "Job not found"));
-    //     } else {
-    //         const updatedJob = await JobModel.findByIdAndUpdate(id, data, {
-    //             new: true,
-    //         });
-    //         res.status(200).json({
-    //             status: true,
-    //             message: "Job Updated",
-    //             result: updatedJob,
-    //         });
-    //     }
-    // } catch (error) {
-    //     next(createError(500, `something wrong: ${error.message}`));
-    // }
 };
 
 exports.deleteUser = async (req, res, next) => {

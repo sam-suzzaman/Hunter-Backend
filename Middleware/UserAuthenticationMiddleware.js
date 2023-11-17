@@ -17,6 +17,4 @@ exports.authenticateUser = async (req, res, next) => {
     } catch (error) {
         next(createHttpError(401, "Unauthorized User"));
     }
-
-    // next();
 };
