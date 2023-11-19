@@ -44,22 +44,6 @@ exports.logOut = async (req, res, next) => {
             httpOnly: true,
             expires: new Date(0), // Set to a date in the past
             path: "/", // Ensure this matches the path set during login
-        })
-            .status(200)
-            .json({
-                status: true,
-                message: "Logout done",
-            });
-    } catch (error) {
-        next(createError(500, error.message));
-    }
-    try {
-        res.clearCookie(process.env.COOKIE_NAME, {
-            sameSite: "none",
-            secure: true,
-            httpOnly: true,
-            expires: new Date(0), // Set to a date in the past
-            path: "/", // Ensure this matches the path set during login
         });
 
         // Ensuring the response is sent only after clearing the cookie
