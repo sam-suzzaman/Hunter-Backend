@@ -38,7 +38,7 @@ exports.getMe = async (req, res, next) => {
 
 exports.logOut = async (req, res, next) => {
     try {
-        res.clearCookie(process.env.COOKIE_NAME, {
+        res.cookie(process.env.COOKIE_NAME, "invalid", {
             sameSite: "none",
             secure: true,
             httpOnly: true,
@@ -107,8 +107,8 @@ exports.loginUser = async (req, res, next) => {
 
                 const one_day = 1000 * 60 * 60 * 24; //since token expire in 1day
 
-                res.cookie(process.env.COOKIE_NAME, "hello", {
-                    // expires: new Date(Date.now() + one_day),
+                res.cookie(process.env.COOKIE_NAME, TOKEN, {
+                    expires: new Date(Date.now() + one_day),
                     secure: true, // Sent only over HTTPS
                     httpOnly: true, // Restricts access from client-side scripts
                     signed: true, // Helps keep the cookie secure
