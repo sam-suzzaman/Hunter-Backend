@@ -44,15 +44,12 @@ exports.logOut = async (req, res, next) => {
             httpOnly: true,
             expires: new Date(0), // Set to a date in the past
             path: "/", // Ensure this matches the path set during login
-        });
-
-        // Ensuring the response is sent only after clearing the cookie
-        res.on("finish", () => {
-            res.status(200).json({
+        })
+            .status(200)
+            .json({
                 status: true,
                 message: "Logout done",
             });
-        });
     } catch (error) {
         next(createError(500, error.message));
     }
