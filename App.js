@@ -9,7 +9,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.json());
 app.use(
     cors({
-        origin: ["https://hunter-iota.vercel.app"],
+        origin: ["https://hunter-iota.vercel.app", "http://localhost:5173"],
         methods: ["*"],
         credentials: true,
     })
