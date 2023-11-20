@@ -38,7 +38,7 @@ exports.getMe = async (req, res, next) => {
 
 exports.logOut = async (req, res, next) => {
     try {
-        res.cookie(process.env.COOKIE_NAME, "invalid", {
+        res.cookie(process.env.COOKIE_NAME, "", {
             sameSite: "none",
             secure: true,
             httpOnly: true,

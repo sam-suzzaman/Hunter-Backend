@@ -17,7 +17,7 @@ const {
 } = require("../Validation/ValidationMiddleware");
 
 // Authentication routes
-AuthRouter.get("/logout", authenticateUser, UserController.logOut);
+AuthRouter.post("/logout", authenticateUser, UserController.logOut);
 AuthRouter.get("/me", authenticateUser, UserController.getMe);
 
 AuthRouter.post(
