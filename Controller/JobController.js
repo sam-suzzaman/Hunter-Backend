@@ -12,14 +12,6 @@ module.exports.getAllJobs = async (req, res, next) => {
 
         const queries = {};
 
-        if (req.query.search) {
-            // Assuming 'searchQuery' is a string field in the database
-            filters.search = {
-                $regex: req.query.search,
-                $options: "i",
-            };
-        }
-
         if (req.query.sort) {
             const sortBy = req.query.sort.split(",").join(" ");
             queries.sortBy = sortBy;
@@ -32,6 +24,37 @@ module.exports.getAllJobs = async (req, res, next) => {
         if (req.query.limit) {
             const limit = req.query.limit.split(",").join(" ");
             queries.limit = limit;
+        }
+        if (req.query.search) {
+            const searchQuery = req.query.search;
+            filters.$or = [
+                {
+                    company: {
+                        $regex: new RegExp(".*" + searchQuery + ".*", "i"),
+                    },
+                },
+                {
+                    position: {
+                        $regex: new RegExp(".*" + searchQuery + ".*", "i"),
+                    },
+                },
+                {
+                    jobStatus: {
+                        $regex: new RegExp(".*" + searchQuery + ".*", "i"),
+                    },
+                },
+                {
+                    jobType: {
+                        $regex: new RegExp(".*" + searchQuery + ".*", "i"),
+                    },
+                },
+                {
+                    jobLocation: {
+                        $regex: new RegExp(".*" + searchQuery + ".*", "i"),
+                    },
+                },
+                // Add more fields as needed
+            ];
         }
 
         const result = await getData(filters, queries);
@@ -50,6 +73,7 @@ module.exports.getAllJobs = async (req, res, next) => {
 };
 
 const getData = async (filters, queries) => {
+    console.log(filters);
     let sortCriteria = {};
 
     if (queries.sortBy) {
