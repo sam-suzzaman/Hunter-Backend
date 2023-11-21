@@ -7,10 +7,18 @@ module.exports.getAllJobs = async (req, res, next) => {
         const filters = { ...req.query }; // to make a copy so that original don't moidfied
 
         // exclude
-        const excludeFields = ["sort", "page", "limit", "fields"];
+        const excludeFields = ["sort", "page", "limit", "fields", "search"];
         excludeFields.forEach((field) => delete filters[field]);
 
         const queries = {};
+
+        if (req.query.search) {
+            // Assuming 'searchQuery' is a string field in the database
+            filters.search = {
+                $regex: req.query.search,
+                $options: "i",
+            };
+        }
 
         if (req.query.sort) {
             const sortBy = req.query.sort.split(",").join(" ");
