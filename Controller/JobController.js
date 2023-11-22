@@ -129,7 +129,6 @@ module.exports.getSingleJob = async (req, res, next) => {
 
 module.exports.addJob = async (req, res, next) => {
     const jobData = req.body;
-
     try {
         const isJobExists = await JobModel.findOne({
             company: jobData.comapny,
@@ -137,7 +136,8 @@ module.exports.addJob = async (req, res, next) => {
         if (isJobExists) {
             next(createError(500, "Job data already exist"));
         } else {
-            jobData.createdBy = req.user._id;
+            console.log(req?.user);
+            jobData.createdBy = req?.user?._id;
             const newJob = new JobModel(jobData);
             const result = await newJob.save();
 

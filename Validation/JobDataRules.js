@@ -14,4 +14,25 @@ exports.checkJobInput = [
     check("jobType")
         .isIn(Object.values(JOB_TYPE))
         .withMessage("Invalid job type"),
+    check("jobVacancy")
+        .trim()
+        .notEmpty()
+        .withMessage("Job Vacancy is requried"),
+    check("jobSalary").trim().notEmpty().withMessage("Job Salary is requried"),
+    check("jobDeadline")
+        .trim()
+        .notEmpty()
+        .withMessage("Job Deadline is requried"),
+    check("jobDescription")
+        .trim()
+        .notEmpty()
+        .withMessage("Job Description is requried"),
+    check("jobSkills").isArray({ min: 1 }).withMessage("Job Skills is requrie"),
+    check("jobFacilities")
+        .isArray({ min: 1 })
+        .withMessage("Job Facilities is requrie"),
+    check("jobContact")
+        .trim()
+        .notEmpty()
+        .withMessage("Job contact is requried"),
 ];
