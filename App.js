@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(
     cors({
         origin: ["https://hunter-iota.vercel.app", "http://localhost:5173"],
-        methods: ["*"],
+        methods: ["GET,POST,DELETE,PUT,PATCH"],
         credentials: true,
     })
 );
