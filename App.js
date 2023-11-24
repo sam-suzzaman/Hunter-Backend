@@ -24,12 +24,12 @@ const {
 const JobRouter = require("./Router/JobRouter");
 const UserRouter = require("./Router/UserRouter");
 const AuthRouter = require("./Router/AuthRouter");
+const AdminRouter = require("./Router/AdminRouter");
 
 // Connecting routes
-app.use("/api/v1/Jobs", JobRouter);
-app.use("/api/v1/Users", UserRouter);
-// app.use("/api/v1/Jobs", authenticateUser, JobRouter);
-// app.use("/api/v1/Users", authenticateUser, UserRouter);
+app.use("/api/v1/Jobs", authenticateUser, JobRouter);
+app.use("/api/v1/Users", authenticateUser, UserRouter);
 app.use("/api/v1/Auth", AuthRouter);
+app.use("/api/v1/Admin", AdminRouter);
 
 module.exports = app;
