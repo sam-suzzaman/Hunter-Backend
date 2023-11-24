@@ -11,8 +11,8 @@ exports.getAllInfo = async (req, res, next) => {
         };
 
         res.status(200).json({
-            status: true,
-            result: info,
+            user: users?.length,
+            job: jobs?.length,
         });
     } catch (error) {
         next(createError(500, error.message));
