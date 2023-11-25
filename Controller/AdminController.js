@@ -39,11 +39,11 @@ exports.monthlyInfo = async (req, res, next) => {
         return acc;
     }, {});
 
-    const defaultStats = {
-        pending: stats.pending || 0,
-        interview: stats.interview || 0,
-        declined: stats.declined || 0,
-    };
+    const defaultStats = [
+        { name: "pending", value: stats.pending || 0 },
+        { name: "interview", value: stats.interview || 0 },
+        { name: "declined", value: stats.declined || 0 },
+    ];
 
     // monthlyt
     let monthly_stats = await JobModel.aggregate([
