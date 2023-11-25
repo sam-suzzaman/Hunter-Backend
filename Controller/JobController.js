@@ -56,13 +56,29 @@ module.exports.getAllJobs = async (req, res, next) => {
                 // Add more fields as needed
             ];
         }
+        if (req.query.page) {
+            const page = Number(req.query.page) || 1;
+            const limit = Number(req.query.limit) || 5;
+            const skip = (page - 1) * limit;
 
-        const result = await getData(filters, queries);
+            queries.skip = skip;
+            queries.limit = limit;
+            queries.page = page;
+        }
 
+        const { result, totalJobs, pageCount, page } = await getData(
+            filters,
+            queries
+        );
+
+        // response
         if (result.length !== 0) {
             res.status(200).json({
                 status: true,
                 result,
+                totalJobs,
+                currentPage: page,
+                pageCount,
             });
         } else {
             next(createError(500, "Job List is empty"));
@@ -72,8 +88,7 @@ module.exports.getAllJobs = async (req, res, next) => {
     }
 };
 
-const getData = async (filters, queries) => {
-    console.log(filters);
+const getData = async (filters, queries, skip, limit) => {
     let sortCriteria = {};
 
     if (queries.sortBy) {
@@ -101,10 +116,15 @@ const getData = async (filters, queries) => {
     }
 
     const result = await JobModel.find(filters)
+        .skip(queries.skip)
+        .limit(queries.limit)
         .sort(sortCriteria)
-        .select(queries.fields)
-        .limit(queries.limit);
-    return result;
+        .select(queries.fields);
+
+    // it not depend on previous one, its document number will be based on filter passing here
+    const totalJobs = await JobModel.countDocuments(filters);
+    const pageCount = Math.ceil(totalJobs / queries.limit);
+    return { result, totalJobs, pageCount, page: queries.page };
 };
 
 module.exports.getSingleJob = async (req, res, next) => {
