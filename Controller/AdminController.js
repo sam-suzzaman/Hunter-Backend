@@ -15,7 +15,7 @@ exports.getAllInfo = async (req, res, next) => {
             user: users?.length,
             job: jobs?.length,
             admin: admin?.length,
-            inverview: interviewJobs?.length,
+            intverview: interviewJobs?.length,
             pending: pendingJobs?.length,
             declined: declinedJobs?.length,
         });
