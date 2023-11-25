@@ -9,5 +9,6 @@ const AdminController = require("../Controller/AdminController");
 
 // Authentication routes
 AdminRouter.get("/info", authenticateUser, AdminController.getAllInfo);
+AdminRouter.get("/stats", authenticateUser, AdminController.monthlyInfo);
 
 module.exports = AdminRouter;
