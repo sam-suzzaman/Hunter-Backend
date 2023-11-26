@@ -38,4 +38,9 @@ exports.checkInput = [
         .withMessage("Application Date is required")
         .isDate()
         .withMessage("Invalid date format. Please provide a valid date."),
+    check("resume")
+        .notEmpty()
+        .withMessage("Applicant's Resume is required")
+        .isURL()
+        .withMessage("Invalid URL. Please provide a valid URL."),
 ];
