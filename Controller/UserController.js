@@ -138,7 +138,7 @@ exports.updateUser = async (req, res, next) => {
         } else {
             const updateUser = await UserModel.findByIdAndUpdate(
                 req.user._id,
-                data,
+                { $set: data },
                 {
                     new: true,
                 }
