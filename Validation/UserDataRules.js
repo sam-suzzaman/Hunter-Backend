@@ -5,7 +5,6 @@ const createHttpError = require("http-errors");
 
 exports.checkRegisterInput = [
     check("username").trim().notEmpty().withMessage("Username is required"),
-    // check("lastname").trim(),
     check("email")
         .trim()
         .notEmpty()
@@ -24,7 +23,6 @@ exports.checkRegisterInput = [
         .withMessage("Password is required")
         .isLength({ min: 8 })
         .withMessage("Password is too short (min 8)"),
-    check("location").trim(),
 ];
 
 exports.checkLoginInput = [
@@ -39,7 +37,6 @@ exports.checkLoginInput = [
 
 exports.checkUserUpdateInput = [
     check("username").trim().notEmpty().withMessage("Username is required"),
-    // check("lastname").trim(),
     check("email")
         .trim()
         .notEmpty()
@@ -52,5 +49,8 @@ exports.checkUserUpdateInput = [
     //         throw new Error("No permission to update");
     //     }
     // }),
-    check("location").trim().notEmpty().withMessage("Location is required"),
+    check("location").trim(),
+    check("gender").trim(),
+    check("role").trim(),
+    check("resume").trim(),
 ];

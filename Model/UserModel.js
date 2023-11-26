@@ -6,17 +6,19 @@ const UserSchema = new mongoose.Schema(
         username: String,
         email: String,
         password: String,
-        // lastname: {
-        //     type: String,
-        //     default: "",
-        // },
         location: {
+            type: String,
+        },
+        gender: {
             type: String,
         },
         role: {
             type: String,
-            enum: ["admin", "user"],
+            enum: ["admin", "recruiter", "user"],
             default: "user",
+        },
+        resume: {
+            type: String,
         },
     },
     { timestamps: true } // to keep track
