@@ -24,6 +24,10 @@ const ApplicationSchema = new mongoose.Schema(
             default: STATUS.PENDING,
             required: true,
         },
+        resume: {
+            type: String,
+            required: true,
+        },
         dateOfApplication: {
             type: Date,
             default: Date.now,
