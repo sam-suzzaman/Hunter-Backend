@@ -16,9 +16,9 @@ const {
 
 // Authentication routes
 ApplicationRouter.get(
-    "/",
+    "/applicant-jobs",
     authenticateUser,
-    ApplicationController.getMyAppliedJobs
+    ApplicationController.getCandidateAppliedJobs
 );
 ApplicationRouter.post(
     "/apply",
@@ -28,9 +28,9 @@ ApplicationRouter.post(
 );
 
 ApplicationRouter.get(
-    "/my-jobs",
+    "/recruiter-jobs",
     authenticateUser,
-    ApplicationController.getMyAppliedJobs
+    ApplicationController.getRecruiterPostJobs
 );
 
 ApplicationRouter.patch(

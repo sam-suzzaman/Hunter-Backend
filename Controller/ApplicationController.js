@@ -14,7 +14,7 @@ exports.testing = async (req, res, next) => {
     }
 };
 
-module.exports.getMyAppliedJobs = async (req, res, next) => {
+module.exports.getCandidateAppliedJobs = async (req, res, next) => {
     try {
         const filters = { ...req.query, applicantId: req.user._id }; // to make a copy so that original don't moidfied
         console.log(filters);
@@ -109,11 +109,11 @@ const getData = async (filters, queries) => {
     return { result, totalJobs, pageCount, page: queries.page };
 };
 
-module.exports.getAppliedJobs = async (req, res, next) => {
+module.exports.getRecruiterPostJobs = async (req, res, next) => {
     const filters = { createdBy: req.user._id };
 
     try {
-        const result = await ApplicationModel.find(filters);
+        const result = await ApplicationModel.find(filters).populate("jobId");
         const totalJobs = await ApplicationModel.countDocuments(filters);
         // response
         if (result.length !== 0) {
