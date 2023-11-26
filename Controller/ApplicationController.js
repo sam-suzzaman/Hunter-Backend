@@ -113,7 +113,7 @@ exports.applyInJob = async (req, res, next) => {
     try {
         const alreadyApplied = await ApplicationModel.findOne({
             applicantId: req.body.applicantId,
-            recruiterId: req.body.recruiterId,
+            jobId: req.body.jobId,
         });
 
         if (alreadyApplied) {
