@@ -131,26 +131,34 @@ exports.loginUser = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
     const data = req.body;
-    console.log(data);
     try {
         if (req.user.email !== data.email) {
             next(createError(500, `You have no permission to update`));
         } else {
-            const updateUser = await UserModel.findByIdAndUpdate(
-                req.user._id,
-                { $set: data },
-                {
-                    new: true,
-                }
-            ).select("-password");
-            res.status(200).json({
-                status: true,
-                message: "Profile Updated",
-                result: updateUser,
-            });
+            const updateUser = await UserModel.updateOne(
+                { _id: req.user._id },
+                { $set: data }
+            );
+
+            if (updateUser.nModified > 0) {
+                const updatedUser = await UserModel.findById(
+                    req.user._id
+                ).select("-password");
+                res.status(200).json({
+                    status: true,
+                    message: "Profile Updated",
+                    result: updatedUser,
+                });
+            } else {
+                res.status(200).json({
+                    status: false,
+                    message: "No changes were made",
+                    result: null,
+                });
+            }
         }
     } catch (error) {
-        next(createError(500, `something wrong: ${error.message}`));
+        next(createError(500, `Something went wrong: ${error.message}`));
     }
 };
 
