@@ -15,14 +15,20 @@ const {
 } = require("../Validation/ValidationMiddleware");
 
 // Authentication routes
+ApplicationRouter.get(
+    "/",
+    authenticateUser,
+    ApplicationController.getMyAppliedJobs
+);
 ApplicationRouter.post(
     "/apply",
     checkInput,
     inputValidationMiddleware,
     ApplicationController.applyInJob
 );
+
 ApplicationRouter.get(
-    "/",
+    "/my-jobs",
     authenticateUser,
     ApplicationController.getMyAppliedJobs
 );

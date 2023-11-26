@@ -109,6 +109,27 @@ const getData = async (filters, queries) => {
     return { result, totalJobs, pageCount, page: queries.page };
 };
 
+module.exports.getAppliedJobs = async (req, res, next) => {
+    const filters = { createdBy: req.user._id };
+
+    try {
+        const result = await ApplicationModel.find(filters);
+        const totalJobs = await ApplicationModel.countDocuments(filters);
+        // response
+        if (result.length !== 0) {
+            res.status(200).json({
+                status: true,
+                totalJobs,
+                result,
+            });
+        } else {
+            next(createError(500, "No Job Found"));
+        }
+    } catch (error) {
+        next(createError(500, error.message));
+    }
+};
+
 exports.applyInJob = async (req, res, next) => {
     try {
         const alreadyApplied = await ApplicationModel.findOne({

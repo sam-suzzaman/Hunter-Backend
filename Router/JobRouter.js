@@ -8,17 +8,11 @@ const {
     inputValidationMiddleware,
 } = require("../Validation/ValidationMiddleware");
 
-const {
-    authenticateUser,
-} = require("./../Middleware/UserAuthenticationMiddleware");
-
 // Routes
 JobRouter.route("/")
     .get(JobController.getAllJobs)
     .post(checkJobInput, inputValidationMiddleware, JobController.addJob)
     .delete(JobController.deleteAllJobs);
-
-JobRouter.get("/my-jobs", authenticateUser, JobController.getMyJobs);
 
 JobRouter.route("/:id")
     .get(JobController.getSingleJob)
