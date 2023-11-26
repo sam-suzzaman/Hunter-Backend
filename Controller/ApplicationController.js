@@ -100,7 +100,8 @@ const getData = async (filters, queries) => {
         .skip(queries.skip)
         .limit(queries.limit)
         .sort(sortCriteria)
-        .select(queries.fields);
+        .select(queries.fields)
+        .populate("jobId");
 
     // it not depend on previous one, its document number will be based on filter passing here
     const totalJobs = await ApplicationModel.countDocuments(filters);
