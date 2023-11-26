@@ -110,11 +110,10 @@ const getData = async (filters, queries) => {
 };
 
 module.exports.getRecruiterPostJobs = async (req, res, next) => {
-    const filters = { createdBy: req.user._id };
-
+    const filter = { recruiterId: req.user._id };
     try {
-        const result = await ApplicationModel.find(filters).populate("jobId");
-        const totalJobs = await ApplicationModel.countDocuments(filters);
+        const result = await ApplicationModel.find(filter).populate("jobId");
+        const totalJobs = await ApplicationModel.countDocuments(filter);
         // response
         if (result.length !== 0) {
             res.status(200).json({
