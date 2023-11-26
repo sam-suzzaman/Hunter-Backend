@@ -57,8 +57,8 @@ module.exports.getAllJobs = async (req, res, next) => {
             ];
         }
         if (req.query.page) {
-            const page = Number(req.query.page) || 1;
-            const limit = Number(req.query.limit) || 5;
+            const page = Number(req.query.page || 1);
+            const limit = Number(req.query.limit || 5);
             const skip = (page - 1) * limit;
 
             queries.skip = skip;
@@ -88,7 +88,7 @@ module.exports.getAllJobs = async (req, res, next) => {
     }
 };
 
-const getData = async (filters, queries, skip, limit) => {
+const getData = async (filters, queries) => {
     let sortCriteria = {};
 
     if (queries.sortBy) {
@@ -114,7 +114,7 @@ const getData = async (filters, queries, skip, limit) => {
         // Default sorting criteria if sortBy parameter is not provided
         sortCriteria = { createdAt: -1 };
     }
-
+    console.log({ limit: queries.limit });
     const result = await JobModel.find(filters)
         .skip(queries.skip)
         .limit(queries.limit)
