@@ -114,7 +114,6 @@ const getData = async (filters, queries) => {
         // Default sorting criteria if sortBy parameter is not provided
         sortCriteria = { createdAt: -1 };
     }
-    console.log({ limit: queries.limit });
     const result = await JobModel.find(filters)
         .skip(queries.skip)
         .limit(queries.limit)
@@ -125,6 +124,27 @@ const getData = async (filters, queries) => {
     const totalJobs = await JobModel.countDocuments(filters);
     const pageCount = Math.ceil(totalJobs / queries.limit);
     return { result, totalJobs, pageCount, page: queries.page };
+};
+
+module.exports.getMyJobs = async (req, res, next) => {
+    const filters = { createdBy: req.user._id };
+
+    try {
+        const result = await JobModel.find(filters);
+        const totalJobs = await JobModel.countDocuments(filters);
+        // response
+        if (result.length !== 0) {
+            res.status(200).json({
+                status: true,
+                totalJobs,
+                result,
+            });
+        } else {
+            next(createError(500, "Job List is empty"));
+        }
+    } catch (error) {
+        next(createError(500, error.message));
+    }
 };
 
 module.exports.getSingleJob = async (req, res, next) => {
