@@ -131,8 +131,9 @@ exports.loginUser = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
     const data = req.body;
+    console.log(data);
     try {
-        if (req.user.email !== data.email) {
+        if (req?.user?.email !== data?.email) {
             next(createError(500, `You have no permission to update`));
         } else {
             const updateUser = await UserModel.updateOne(
