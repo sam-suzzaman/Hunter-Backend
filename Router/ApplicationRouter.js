@@ -21,6 +21,17 @@ ApplicationRouter.post(
     inputValidationMiddleware,
     ApplicationController.applyInJob
 );
+ApplicationRouter.get(
+    "/",
+    authenticateUser,
+    ApplicationController.getMyAppliedJobs
+);
+
+ApplicationRouter.patch(
+    "/:id",
+    authenticateUser,
+    ApplicationController.updateJobStatus
+);
 // ApplicationRouter.get("/stats", authenticateUser, AdminController.monthlyInfo);
 
 module.exports = ApplicationRouter;
