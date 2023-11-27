@@ -8,20 +8,33 @@ const {
     inputValidationMiddleware,
 } = require("../Validation/ValidationMiddleware");
 
+const {
+    userAuthorizationHandler,
+} = require("./../Middleware/UserAuthorizationMiddleware");
+
 // Routes
 JobRouter.route("/")
-    .get(JobController.getAllJobs)
-    .post(checkJobInput, inputValidationMiddleware, JobController.addJob)
+    .get(userAuthorizationHandler("recruiter"), JobController.getAllJobs)
+    .post(
+        userAuthorizationHandler("recruiter"),
+        checkJobInput,
+        inputValidationMiddleware,
+        JobController.addJob
+    )
     .delete(JobController.deleteAllJobs);
 
 JobRouter.route("/:id")
     .get(JobController.getSingleJob)
     .patch(
+        userAuthorizationHandler("recruiter"),
         checkJobInput,
         inputValidationMiddleware,
         JobController.updateSingleJob
     )
-    .delete(JobController.deleteSingleJob);
+    .delete(
+        userAuthorizationHandler("recruiter"),
+        JobController.deleteSingleJob
+    );
 
 module.exports = JobRouter;
 

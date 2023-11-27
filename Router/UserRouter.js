@@ -16,17 +16,23 @@ const {
 const {
     inputValidationMiddleware,
 } = require("../Validation/ValidationMiddleware");
+const {
+    userAuthorizationHandler,
+} = require("./../Middleware/UserAuthorizationMiddleware");
 
 // Routes
 
 UserRouter.route("/")
-    .get(UserController.getAllUser)
-    .patch(UserController.updateUser)
+    .get(userAuthorizationHandler("admin"), UserController.getAllUser)
+    .patch(
+        userAuthorizationHandler(["recruiter", "admin", "user"]),
+        UserController.updateUser
+    )
     .delete(UserController.deleteAllUser);
 
 UserRouter.route("/:id")
     .get(UserController.getSingleUser)
-    .delete(UserController.deleteUser);
+    .delete(userAuthorizationHandler("admin"), UserController.deleteUser);
 
 module.exports = UserRouter;
 

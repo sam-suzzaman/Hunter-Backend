@@ -13,29 +13,37 @@ const { checkInput } = require("../Validation/ApplicationDataRules");
 const {
     inputValidationMiddleware,
 } = require("../Validation/ValidationMiddleware");
+const {
+    userAuthorizationHandler,
+} = require("./../Middleware/UserAuthorizationMiddleware");
 
 // Authentication routes
 ApplicationRouter.get(
     "/applicant-jobs",
     authenticateUser,
+    userAuthorizationHandler("user"),
     ApplicationController.getCandidateAppliedJobs
 );
 ApplicationRouter.post(
     "/apply",
     checkInput,
     inputValidationMiddleware,
+    authenticateUser,
+    userAuthorizationHandler("user"),
     ApplicationController.applyInJob
 );
 
 ApplicationRouter.get(
     "/recruiter-jobs",
     authenticateUser,
+    userAuthorizationHandler("recruiter"),
     ApplicationController.getRecruiterPostJobs
 );
 
 ApplicationRouter.patch(
     "/:id",
     authenticateUser,
+    userAuthorizationHandler("recruiter"),
     ApplicationController.updateJobStatus
 );
 // ApplicationRouter.get("/stats", authenticateUser, AdminController.monthlyInfo);
