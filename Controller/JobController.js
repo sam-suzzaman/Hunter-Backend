@@ -212,13 +212,11 @@ module.exports.deleteSingleJob = async (req, res, next) => {
                 message: "Job not found",
             });
         } else {
-            // const result = await JobModel.findByIdAndDelete(id);
             // Find and delete associated applications
 
             await ApplicationModel.deleteMany({ jobId: id });
+            const result = await JobModel.findByIdAndDelete(id);
 
-            // Now remove the job itself
-            await isJobExists.remove();
             res.status(200).json({
                 status: true,
                 message: "Job Deleted",
