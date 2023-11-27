@@ -2,6 +2,8 @@ const UserModel = require("../Model/UserModel");
 const JobModel = require("../Model/JobModel");
 const mongoose = require("mongoose");
 
+const createError = require("http-errors");
+
 const day = require("dayjs");
 
 exports.getAllInfo = async (req, res, next) => {
@@ -76,4 +78,31 @@ exports.monthlyInfo = async (req, res, next) => {
         .reverse(); // reverse: to get latest 6 ones
 
     res.status(200).json({ defaultStats, monthly_stats });
+};
+
+exports.updateUserRole = async (req, res, next) => {
+    const { id, role } = req.body;
+    try {
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            next(createError(400, "Invalid User ID format"));
+        } else {
+            if (req?.user?.role !== "admin") {
+                next(createError(500, `You have no permission to update`));
+            } else {
+                const updateUser = await UserModel.findByIdAndUpdate(
+                    { _id: id },
+                    { $set: { role: role } },
+                    {
+                        new: true,
+                    }
+                );
+                res.status(200).json({
+                    status: true,
+                    message: "Role Updated",
+                });
+            }
+        }
+    } catch (error) {
+        next(createError(500, `Something went wrong: ${error.message}`));
+    }
 };
