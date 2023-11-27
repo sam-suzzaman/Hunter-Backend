@@ -18,15 +18,13 @@ const {
 } = require("./../Middleware/UserAuthorizationMiddleware");
 
 // Authentication routes
+
 ApplicationRouter.get(
     "/applicant-jobs",
+    userAuthorizationHandler("user"),
     ApplicationController.getCandidateAppliedJobs
 );
-// ApplicationRouter.get(
-//     "/applicant-jobs",
-//     userAuthorizationHandler("user"),
-//     ApplicationController.getCandidateAppliedJobs
-// );
+
 ApplicationRouter.post(
     "/apply",
     checkInput,
@@ -37,13 +35,9 @@ ApplicationRouter.post(
 
 ApplicationRouter.get(
     "/recruiter-jobs",
+    userAuthorizationHandler("recruiter"),
     ApplicationController.getRecruiterPostJobs
 );
-// ApplicationRouter.get(
-//     "/recruiter-jobs",
-//     userAuthorizationHandler("recruiter"),
-//     ApplicationController.getRecruiterPostJobs
-// );
 
 ApplicationRouter.patch(
     "/:id",
