@@ -1,4 +1,6 @@
 const JobModel = require("../Model/JobModel");
+const ApplicationModel = require("../Model/ApplicationModel");
+
 const createError = require("http-errors");
 const mongoose = require("mongoose");
 
@@ -126,7 +128,6 @@ const getData = async (filters, queries) => {
     return { result, totalJobs, pageCount, page: queries.page };
 };
 
-
 module.exports.getSingleJob = async (req, res, next) => {
     const { id } = req.params;
     try {
@@ -211,7 +212,13 @@ module.exports.deleteSingleJob = async (req, res, next) => {
                 message: "Job not found",
             });
         } else {
-            const result = await JobModel.findByIdAndDelete(id);
+            // const result = await JobModel.findByIdAndDelete(id);
+            // Find and delete associated applications
+
+            await ApplicationModel.deleteMany({ jobId: id });
+
+            // Now remove the job itself
+            await isJobExists.remove();
             res.status(200).json({
                 status: true,
                 message: "Job Deleted",

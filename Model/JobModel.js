@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { JOB_STATUS, JOB_TYPE } = require("../Utils/JobConstants");
 
-const ApplicationModel = require("../Model/ApplicationModel");
+// const ApplicationModel = require("../Model/ApplicationModel");
 
 const JobSchema = new mongoose.Schema(
     {
@@ -90,15 +90,15 @@ const JobSchema = new mongoose.Schema(
     { timestamps: true } // to keep track
 );
 
-JobSchema.pre("remove", async function (next) {
-    try {
-        // 'this' refers to the job being removed
-        await ApplicationModel.deleteMany({ jobId: this._id });
-        next();
-    } catch (error) {
-        next(error);
-    }
-});
+// JobSchema.pre("remove", async function (next) {
+//     try {
+//         // 'this' refers to the job being removed
+//         await ApplicationModel.deleteMany({ jobId: this._id });
+//         next();
+//     } catch (error) {
+//         next(error);
+//     }
+// });
 
 const JobModel = mongoose.model("Job", JobSchema);
 module.exports = JobModel;
