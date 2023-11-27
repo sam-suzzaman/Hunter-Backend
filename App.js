@@ -31,7 +31,7 @@ const ApplicationRouter = require("./Router/ApplicationRouter");
 app.use("/api/v1/Jobs", authenticateUser, JobRouter);
 app.use("/api/v1/Users", authenticateUser, UserRouter);
 app.use("/api/v1/Auth", AuthRouter);
-app.use("/api/v1/Admin", AdminRouter);
-app.use("/api/v1/Application", ApplicationRouter);
+app.use("/api/v1/Admin", authenticateUser, AdminRouter);
+app.use("/api/v1/Application", authenticateUser, ApplicationRouter);
 
 module.exports = app;

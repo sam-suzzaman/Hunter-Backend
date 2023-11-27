@@ -1,8 +1,5 @@
 const express = require("express");
-const UserRouter = express.Router(); // create a router
-const {
-    authenticateUser,
-} = require("./../Middleware/UserAuthenticationMiddleware");
+const UserRouter = express.Router();
 
 // Controllers
 const UserController = require("../Controller/UserController");
@@ -20,14 +17,11 @@ const {
     userAuthorizationHandler,
 } = require("./../Middleware/UserAuthorizationMiddleware");
 
+// userAuthorizationHandler("admin"),
 // Routes
-
 UserRouter.route("/")
     .get(userAuthorizationHandler("admin"), UserController.getAllUser)
-    .patch(
-        userAuthorizationHandler(["recruiter", "admin", "user"]),
-        UserController.updateUser
-    )
+    .patch(UserController.updateUser)
     .delete(UserController.deleteAllUser);
 
 UserRouter.route("/:id")
