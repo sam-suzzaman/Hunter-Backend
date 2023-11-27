@@ -14,7 +14,7 @@ const {
 
 // Routes
 JobRouter.route("/")
-    .get(userAuthorizationHandler("recruiter"), JobController.getAllJobs)
+    .get(JobController.getAllJobs)
     .post(
         userAuthorizationHandler("recruiter"),
         checkJobInput,
