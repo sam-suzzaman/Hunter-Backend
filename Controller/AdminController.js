@@ -35,8 +35,11 @@ exports.getAllInfo = async (req, res, next) => {
 };
 
 exports.monthlyInfo = async (req, res, next) => {
+    // let stats = await JobModel.aggregate([
+    //     { $match: { createdBy: new mongoose.Types.ObjectId(req.user._id) } },
+    //     { $group: { _id: "$jobStatus", count: { $sum: 1 } } },
+    // ]);
     let stats = await JobModel.aggregate([
-        { $match: { createdBy: new mongoose.Types.ObjectId(req.user._id) } },
         { $group: { _id: "$jobStatus", count: { $sum: 1 } } },
     ]);
 
@@ -52,9 +55,22 @@ exports.monthlyInfo = async (req, res, next) => {
         { name: "declined", value: stats.declined || 0 },
     ];
 
-    // monthlyt
+    // monthly
+    // let monthly_stats = await JobModel.aggregate([
+    //     { $match: { createdBy: new mongoose.Types.ObjectId(req.user._id) } },
+    //     {
+    //         $group: {
+    //             _id: {
+    //                 year: { $year: "$createdAt" },
+    //                 month: { $month: "$createdAt" },
+    //             },
+    //             count: { $sum: 1 },
+    //         },
+    //     },
+    //     { $sort: { "_id:year": -1, "_id.month": -1 } },
+    //     { $limit: 6 }, // how many return(last six month's value will return)
+    // ]);
     let monthly_stats = await JobModel.aggregate([
-        { $match: { createdBy: new mongoose.Types.ObjectId(req.user._id) } },
         {
             $group: {
                 _id: {

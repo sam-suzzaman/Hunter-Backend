@@ -1,16 +1,8 @@
-**Project Title: `Hunter`**
-
----
+## Project Title: `Hunter`
 
 ### Introduction:
 
-It is a MERN Stack based Job Portal Website. Comming Soon...
-
-<br/>
-
-### Key Features:
-
--   Comming Soon
+This is a Job Portal Web Application which is MERN Stack based application. This application has all the functions of managing the user of the application including posting a job, applying for that job and accepting or rejecting the application. Now we will see the function of the complete application part by part.
 
 <br/>
 
