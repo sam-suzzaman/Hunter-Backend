@@ -90,6 +90,28 @@ module.exports.getAllJobs = async (req, res, next) => {
     }
 };
 
+module.exports.getMyJobs = async (req, res, next) => {
+    try {
+        const result = await JobModel.find({
+            createdBy: req.user._id,
+        }).populate("createdBy", "username email");
+        // here in populate only give the "username(selected filed) or only (-password) ommited fields" else showing error
+
+        if (result?.length) {
+            res.status(200).json({
+                status: true,
+                result,
+            });
+        } else {
+            res.status(400).json({
+                message: "Job not found",
+            });
+        }
+    } catch (error) {
+        next(createError(500, `something wrong: ${error.message}`));
+    }
+};
+
 const getData = async (filters, queries) => {
     let sortCriteria = {};
 

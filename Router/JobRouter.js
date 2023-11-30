@@ -23,6 +23,7 @@ JobRouter.route("/")
     )
     .delete(JobController.deleteAllJobs);
 
+JobRouter.get("/my-jobs", JobController.getMyJobs);
 JobRouter.route("/:id")
     .get(JobController.getSingleJob)
     .patch(

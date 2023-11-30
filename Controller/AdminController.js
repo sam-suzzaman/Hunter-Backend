@@ -70,6 +70,7 @@ exports.monthlyInfo = async (req, res, next) => {
     //     { $sort: { "_id:year": -1, "_id.month": -1 } },
     //     { $limit: 6 }, // how many return(last six month's value will return)
     // ]);
+
     let monthly_stats = await JobModel.aggregate([
         {
             $group: {
