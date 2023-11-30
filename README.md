@@ -14,6 +14,24 @@ This is a Job Portal Web Application which is MERN Stack based application. This
 -   Dotenv
 -   nanoid
 -   Http-errors
+-   bcrypt
+-   cookie-parser
+-   dayjs
+-   express-validator
+-   jsonwebtoken
+
+<br/>
+
+### Key Function:
+
+-   Protecting Routes
+-   User related (CRUD) operation
+-   User Authentication and Authorization
+-   Job related (CRUD) operation
+-   Application related operation
+    -   apply to a job
+    -   accept/reject application
+-   and so on
 
 <br/>
 
@@ -26,4 +44,10 @@ Here is a brief description of the problems I faced while doing this project and
 -   <u>Description:</u> After the user has successfully logged in
     A cookie was set, but the cookie was not removed after logging out, which was a major problem.
 
--   <u>Solution:</u> The biggest problem here was that the solution to this problem was not directly online. stack-overflow also had this problem but there was no answer. After that by tried again and again and by reading articles from different places and found a hint in one place. Based on that article I understood that for the get route, I left in log out (at the backend), the cache is being created and a new cookie is not coming. Later I converted get route to post route as per that article and thus I solved this problem. Now new cookie is set in both login and log out and application is working properly.
+-   <u>Solution:</u> By tried again and again and by reading articles from different places, found a hint in one place. Based on that article I understood that for the get route, I left in log out (at the backend), the cache is being created and a new cookie is not coming. Later I converted get route to post route as per that article and thus I solved this problem. Now new cookie is set in both login and log out and application is working properly.
+
+`2. Generating Monthly Information:`
+
+-   <u>Description:</u> One of the biggest challenges for this project was generating monthly application info.
+
+-   <u>Solution:</u> To solve this problem, with the help of Chat GPT, I have created the api of monthly information using mongodb's aggregation concept.
